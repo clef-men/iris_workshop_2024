@@ -1,0 +1,46 @@
+\begin{frame}{TMC transformation}
+\LARGE
+\begin{mathpar}
+        \datalangExpr_s \tmcDir{\datalangRenaming} \datalangExpr_t
+    \and
+        \datalangDef_s \tmcDir{\datalangRenaming} \datalangDef_t
+    \\\\
+        (\datalangExpr_\mathit{dst}, \datalangExpr_\mathit{idx}, \datalangExpr_s) \tmcDps{\datalangRenaming} \datalangExpr_t
+    \and
+        \datalangDef_s \tmcDps{\datalangRenaming} \datalangDef_t
+    \\\\
+        \datalangProg_s \tmc \datalangProg_t
+\end{mathpar}
+\end{frame}
+
+\begin{frame}[fragile]{TMC transformation: \texttt{map}}
+\begin{adjustwidth}{-1.5em}{-1.5em}
+\begin{minipage}{.4\columnwidth}
+\begin{lstlisting}
+%\textcolor{red}{map}% |-> rec f xs =
+  match xs with
+  | [] ->
+      []
+  | x :: xs ->
+      let y = f x in
+      let dst = y :: ? in
+      @%\textcolor{orange}{map\_dps}% dst 2 f xs ;
+      dst
+\end{lstlisting}
+\end{minipage}
+\hspace{1cm}
+\begin{minipage}{.52\columnwidth}
+\begin{lstlisting}
+%\textcolor{orange}{map\_dps}% |-> rec dst idx f xs =
+  match xs with
+  | [] ->
+      dst.(idx) <- []
+  | x :: xs ->
+      let y = f x in
+      let dst' = y :: ? in
+      dst.(idx) <- dst' ;
+      @%\textcolor{orange}{map\_dps}% dst' 2 f xs
+\end{lstlisting}
+\end{minipage}
+\end{adjustwidth}
+\end{frame}

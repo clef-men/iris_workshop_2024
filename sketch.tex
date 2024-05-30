@@ -1,0 +1,376 @@
+\begin{frame}[fragile]{Proof sketch}
+\begin{mathpar}
+    \only<1->{
+            f_s \iSimilar f_t
+        \and
+            \mathit{xs}_s \iSimilar \mathit{xs}_t
+    }
+    \only<4->{
+        \\
+            x_s \iSimilar x_t
+        \and
+            \mathit{xs}'_s \iSimilar \mathit{xs}'_t
+    }
+    \only<6->{
+        \\
+            y_s \iSimilar y_t
+    }
+    \only<10-13>{
+        \\
+            \datalangLoc_t \iPointsto_t (\mathrm{CONS}, y_t, \datalangHole)
+    }
+    \only<14->{
+        \\
+            \mathit{ys}_s \iSimilar \mathit{ys}_t
+    }
+    \only<14-18>{
+        \\
+            \datalangLoc_t \iPointsto_t (\mathrm{CONS}, y_t, \mathit{ys}_t)
+    }
+    \only<17-18>{
+        \\
+            \datalangLoc_s \iPointsto_s (\mathrm{CONS}, y_s, \mathit{ys}_s)
+    }
+    \only<19->{
+        \\
+            \datalangLoc_s \iSimilar \datalangLoc_t
+    }
+\end{mathpar}
+\vfill
+\hrule
+\vfill
+\begin{minipage}{.4\columnwidth}
+    \begin{onlyenv}<1-2>
+        \begin{lstlisting}
+match $\mathit{xs}_s$ with
+| [] ->
+    []
+| x :: xs' ->
+    let y = $f_s$ x in
+    y :: @map $f_s$ xs'
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<3>
+        \begin{lstlisting}
+        []
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<4-5>
+        \begin{lstlisting}
+let y = $f_s$ $x_s$ in
+y :: @map $f_s$ $\mathit{xs}'_s$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<6-7>
+        \begin{lstlisting}
+let y = $y_s$ in
+y :: @map $f_s$ $\mathit{xs}'_s$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<8-11>
+        \begin{lstlisting}
+$y_s$ :: @map $f_s$ $\mathit{xs}'_s$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<12-13>
+        \begin{lstlisting}
+$y_s$ :: @%\textcolor{red}{map}% $f_s$ $\mathit{xs}'_s$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<14-16>
+        \begin{lstlisting}
+$y_s$ :: $\mathit{ys}_s$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<17->
+        \begin{lstlisting}
+$\datalangLoc_s$
+        \end{lstlisting}
+    \end{onlyenv}
+\end{minipage}
+\begin{minipage}{.05\columnwidth}
+$\gtrsim$
+\end{minipage}
+\begin{minipage}{.4\columnwidth}
+    \begin{onlyenv}<1-2>
+        \begin{lstlisting}
+match $\mathit{xs}_t$ with
+| [] ->
+    []
+| x :: xs' ->
+    let y = $f_t$ x in
+    let dst = y :: ? in
+    @map_dps dst 2 $f_t$ xs' ;
+    dst
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<3>
+        \begin{lstlisting}
+        []
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<4-5>
+        \begin{lstlisting}
+let y = $f_t$ $x_t$ in
+let dst = y :: ? in
+@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+dst
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<6-7>
+        \begin{lstlisting}
+let y = $y_t$ in
+let dst = y :: ? in
+@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+dst
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<8-9>
+        \begin{lstlisting}
+let dst = $y_t$ :: ? in
+@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+dst
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<10-11>
+        \begin{lstlisting}
+let dst = $\datalangLoc_t$ in
+@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+dst
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<12-13>
+        \begin{lstlisting}
+@%\textcolor{red}{map\_dps}% $\datalangLoc_t$ 2 $f_t$ $\mathit{xs}'_t$ ;
+$\datalangLoc_t$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<14>
+        \begin{lstlisting}
+() ; $\datalangLoc_t$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<15->
+        \begin{lstlisting}
+$\datalangLoc_t$
+        \end{lstlisting}
+    \end{onlyenv}
+\end{minipage}
+\begin{overbox}<2>
+    \begin{mathpar}
+        \inferrule*[lab=RelMatch]
+            {
+                \iSimv{
+                    \iSimilar
+                }{
+                    \datalangExpr_{s0}
+                }{
+                    \datalangExpr_{t0}
+                }
+            \\\\
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_{s1}
+                }{
+                    \datalangExpr_{t1}
+                }
+            \\\\
+                \forall x_s, x_t, \mathit{xs}_s, \mathit{xs}_t \ldotp
+                x_s \iSimilar x_t \iWand
+                \mathit{xs}_s \iSimilar \mathit{xs}_t \iWand
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_{s2}
+                }{
+                    \datalangExpr_{t2}
+                }
+            }{
+                \iSim{
+                    \Phi
+                }{
+                    \datalangMatch{\datalangExpr_{s0}}{\datalangExpr_{s1}}{x_s}{\mathit{xs}_s}{\datalangExpr_{s2}}
+                }{
+                    \datalangMatch{\datalangExpr_{t0}}{\datalangExpr_{t1}}{x_t}{\mathit{xs}_t}{\datalangExpr_{t2}}
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<5>
+    \begin{mathpar}
+        \inferrule*[lab=RelvCallSimilar]
+            {
+                f_s \iSimilar f_t
+            \and
+                x_s \iSimilar x_t
+            }{
+                \iSimv{
+                    \iSimilar
+                }{
+                    \datalangCall{f_s}{x_s}
+                }{
+                    \datalangCall{f_t}{x_t}
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<7>
+    \begin{mathpar}
+        \inferrule*[lab=RelPure]
+            {
+                \datalangExpr_s \pureStep{p_s} \datalangExpr'_s
+            \and
+                \datalangExpr_t \pureStep{p_t} \datalangExpr'_t
+            \and
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr'_s
+                }{
+                    \datalangExpr'_t
+                }
+            }{
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangExpr_t
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<9>
+    \begin{mathpar}
+        \inferrule*[lab=RelTgtCons]
+            {
+                \forall \datalangLoc \ldotp
+                \datalangLoc \iPointsto_t (\mathrm{CONS}, \datalangVal_1, \datalangVal_2) \iWand
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangLoc
+                }
+            }{
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangCons{\datalangVal_1}{\datalangVal_2}
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<11>
+    \begin{mathpar}
+        \inferrule*[lab=RelTgtPure]
+            {
+                \datalangExpr_t \pureStep{p_t} \datalangExpr'_t
+            \and
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangExpr'_t
+                }
+            }{
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangExpr_t
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<13>
+    \begin{mathpar}
+        \inferrule*[lab=RelDPS2]
+            {
+                \datalangRenaming [\datalangFn] = \datalangFn_\mathit{dps}
+            \\\\
+                \overline{\datalangVal_s} \iSimilar \overline{\datalangVal_t}
+            \\\\
+                \datalangLoc \iPointsto_t (\datalangTag, \datalangValTwo_1, \datalangValTwo_2)
+            \\\\
+                \forall \textcolor{red}{\datalangValTwo_s}, \textcolor{teal}{\datalangValTwo_t} \ldotp
+                \textcolor{red}{\datalangValTwo_s} \iSimilar \textcolor{teal}{\datalangValTwo_t} \iWand
+                \datalangLoc \iPointsto_t (\datalangTag, \datalangValTwo_1, \textcolor{teal}{\datalangValTwo_t}) \iWand
+                \iSim{
+                    \Phi
+                }{
+                    \textcolor{red}{\datalangValTwo_s}
+                }{
+                    \datalangUnit
+                }
+            }{
+                \iSim{
+                    \Phi
+                }{
+                    \datalangCall{\datalangFn}{\overline{\datalangVal_s}}
+                }{
+                    \datalangCall{\datalangFn_\mathit{dps}}{\datalangLoc \ 2\ \overline{\datalangVal_t}}
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<16>
+    \begin{mathpar}
+        \inferrule*[lab=RelSrcCons]
+            {
+                \forall \datalangLoc \ldotp
+                \datalangLoc \iPointsto_s (\mathrm{CONS}, \datalangVal_1, \datalangVal_2) \iWand
+                \iSim{
+                    \Phi
+                }{
+                    \datalangLoc
+                }{
+                    \datalangExpr_t
+                }
+            }{
+                \iSim{
+                    \Phi
+                }{
+                    \datalangCons{\datalangVal_1}{\datalangVal_2}
+                }{
+                    \datalangExpr_t
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<18>
+    \begin{mathpar}
+        \inferrule*[lab=RelBijInsert]
+            {
+                \datalangLoc_s \iPointsto_s \overline{\datalangVal_s}
+            \\\\
+                \datalangLoc_t \iPointsto_t \overline{\datalangVal_t}
+            \\\\
+                \overline{\datalangVal_s} \iSimilar \overline{\datalangVal_t}
+            \\\\
+                \datalangLoc_s \iSimilar \datalangLoc_t \iWand
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangExpr_t
+                }
+            }{
+                \iSim{
+                    \Phi
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangExpr_t
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\end{frame}
