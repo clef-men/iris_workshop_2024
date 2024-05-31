@@ -23,7 +23,7 @@
       []
   | x :: xs ->
       let y = f x in
-      let dst = y :: ? in
+      let dst = y :: ?? in
       @%\textcolor{orange}{map\_dps}% dst 2 f xs ;
       dst
 \end{lstlisting}
@@ -37,10 +37,80 @@
       dst.(idx) <- []
   | x :: xs ->
       let y = f x in
-      let dst' = y :: ? in
+      let dst' = y :: ?? in
       dst.(idx) <- dst' ;
       @%\textcolor{orange}{map\_dps}% dst' 2 f xs
 \end{lstlisting}
 \end{minipage}
 \end{adjustwidth}
+\end{frame}
+
+%\begin{frame}{Transformation soundness}
+%\begin{adjustwidth}{-2em}{-2em}
+%\small
+%\begin{tabular}{rcl}
+%        $\datalangProg_s \mathcolor{magenta}{\refined} \datalangProg_t$
+%        & $\coloneqq$ &
+%        $\forall \datalangFn \in \dom{\datalangProg_s}, \datalangVal_s, \datalangVal_t \ldotp \wf{\datalangVal_s} \wedge \datalangVal_s \similar \datalangVal_t \implies$
+%    \\
+%        &&
+%        $\datalangCall{\datalangFnptr{\datalangFn}}{\datalangVal_s} \mathcolor{orange}{\refined} \datalangCall{\datalangFnptr{\datalangFn}}{\datalangVal_t}$
+%    \\\\
+%        $\datalangExpr_s \mathcolor{orange}{\refined} \datalangExpr_t$
+%        & $\coloneqq$ &
+%        $\forall b_t \in \mathcolor{teal}{\mathrm{behaviours}}_{\datalangProg_t} (\datalangExpr_t) \ldotp$
+%    \\
+%        &&
+%        $\exists b_s \in \mathcolor{teal}{\mathrm{behaviours}}_{\datalangProg_s} (\datalangExpr_s) \ldotp
+%        b_s \mathcolor{blue}{\refined} b_t$
+%    \\\\
+%        $\mathcolor{teal}{\mathrm{behaviours}}_{\datalangProg} (\datalangExpr)$
+%    	& $\coloneqq$ &
+%		$\{ \constr[\datalangExpr']{Conv} \mid \exists \datalangState \ldotp (\datalangExpr, \emptyset) \step{\datalangProg}^* (\datalangExpr', \datalangState) \wedge \mathrm{irreducible}_{\datalangProg} (\datalangExpr', \datalangState) \}$
+%	\\
+%        &&
+%		$\uplus\ \{ \constr{Div} \mid\ \diverges{\datalangProg}{(\datalangExpr, \emptyset)} \}$
+%\end{tabular}
+%\vfill
+%\begin{mathpar}
+%    \inferrule*
+%        {
+%            \datalangVal_s \similar \datalangVal_t
+%        }{
+%            \constr[\datalangVal_s]{Conv} \mathcolor{blue}{\refined} \constr[\datalangVal_t]{Conv}
+%        }
+%    \and
+%    \inferrule*
+%        {
+%            \datalangExpr_s \notin \datalangVal[]
+%        \and
+%            \datalangExpr_t \notin \datalangVal[]
+%        }{
+%            \constr[\datalangExpr_s]{Conv} \mathcolor{blue}{\refined} \constr[\datalangExpr_t]{Conv}
+%        }
+%    \and
+%    \inferrule*
+%        {}{
+%            \constr{Div} \mathcolor{blue}{\refined} \constr{Div}
+%        }
+%\end{mathpar}
+%\end{adjustwidth}
+%\end{frame}
+
+\begin{frame}{Transformation soundness}
+\Large
+\centering
+\begin{tabular}{c}
+        program $\datalangProg_s$ transforms into program $\datalangProg_t$
+    \\\\
+        $\datalangProg_s \tmc \datalangProg_t$
+    \\
+        $\implies$
+    \\
+        $\datalangProg_s \refined \datalangProg_t$
+    \\\\
+        program $\datalangProg_t$ refines program $\datalangProg_t$
+    \\
+        (termination-preserving refinement)
+\end{tabular}
 \end{frame}

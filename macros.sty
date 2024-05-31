@@ -19,9 +19,33 @@
 
 % ---------------------------------------------------------
 
-\newcommand{\finmap}{\stackrel{\mathrm{fin}}{\rightharpoonup}}
-\newcommand{\dom}[1]{\mathrm{dom} (#1)}
-\newcommand{\codom}[1]{\mathrm{codom} (#1)}
+\makeatletter
+\def\mathcolor#1#{\@mathcolor{#1}}
+\def\@mathcolor#1#2#3{%
+  \protect\leavevmode
+  \begingroup
+    \color#1{#2}#3%
+  \endgroup
+}
+\makeatother
+
+% ---------------------------------------------------------
+
+\newcommand{\finmap}{%
+    \stackrel{\mathrm{fin}}{\rightharpoonup}%
+}
+\newcommand{\dom}[1]{%
+    \mathrm{dom} (#1)%
+}
+\newcommand{\codom}[1]{%
+    \mathrm{codom} (#1)%
+}
+\newcommand{\constr}[2][]{%
+    \bold{#2}\ifx #1 \else (#1)\fi%
+}
+\newcommand{\wf}[2][]{%
+    \mathrm{wf}\ifx #1 \else _#1 \fi (#2)%
+}
 
 % ---------------------------------------------------------
 
@@ -256,8 +280,26 @@
 \newcommand{\iSimHoare}[5][]{%
     \left[ #2 \right] \ \iSim[#1]{#3}{#4}{#5}%
 }
+\newcommand{\iSimHoarePretty}[4]{%
+    \begin{array}{c}
+            \left[ #1 \right]
+        \\ \hline
+            #2 \ \gtrsim\ #3
+        \\ \hline
+            \left[ #4 \right]
+    \end{array}%
+}
 \newcommand{\iSimvHoare}[5][]{%
     \left\{ #2 \right\} \ \iSimv[#1]{#3}{#4}{#5}%
+}
+\newcommand{\iSimvHoarePretty}[4]{%
+    \begin{array}{c}
+            \left\{ #1 \right\}
+        \\ \hline
+            #2 \ \gtrsim\ #3
+        \\ \hline
+            \left\{ #4 \right\}
+    \end{array}%
 }
 \newcommand{\iRsim}[4][]{%
     #3 \geq #4 \,%
