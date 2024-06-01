@@ -98,19 +98,31 @@
 %\end{frame}
 
 \begin{frame}{Transformation soundness}
-\Large
+\large
 \centering
-\begin{tabular}{c}
+\begin{tabular}{ccc}
+        $\datalangProg_s \tmc \datalangProg_t$
+        &&
         program $\datalangProg_s$ transforms into program $\datalangProg_t$
     \\\\
-        $\datalangProg_s \tmc \datalangProg_t$
-    \\
-        $\implies$
-    \\
-        $\datalangProg_s \refined \datalangProg_t$
+    \onslide<2>{
+        $\Downarrow$
     \\\\
+        $\datalangProg_s \gtrsim \datalangProg_t$
+        &&
+        program $\datalangProg_t$ simulates program $\datalangProg_s$
+    \\
+        &&
+        (\emph{relational separation logic}, \Simuliris)
+    }
+    \\\\
+        $\Downarrow$
+    \\\\
+        $\datalangProg_s \refined \datalangProg_t$
+        &&
         program $\datalangProg_t$ refines program $\datalangProg_t$
     \\
+        &&
         (termination-preserving refinement)
 \end{tabular}
 \end{frame}

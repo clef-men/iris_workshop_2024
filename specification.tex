@@ -1,86 +1,116 @@
 \begin{frame}{Specification in separation logic}
-\Large
+\LARGE
 \[
     \iSimvHoarePretty{
-        \mathcolor{teal}{\datalangVal_s} \iSimilar \mathcolor{teal}{\datalangVal_t}
+        ???
     }{
-        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{teal}{\datalangVal_s}}
+        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{magenta}{\datalangVal_s}}
     }{
-        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{teal}{\datalangVal_t}}
+        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{magenta}{\datalangVal_t}}
     }{
-        \mathcolor{blue}{\datalangValTwo_s}, \mathcolor{blue}{\datalangValTwo_t} \ldotp
-        \mathcolor{blue}{\datalangValTwo_s} \iSimilar \mathcolor{blue}{\datalangValTwo_t}
+        ???
     }
 \]
 \vfill
 \[
     \iSimvHoarePretty{
-        \mathcolor{teal}{\datalangVal_s} \iSimilar \mathcolor{teal}{\datalangVal_t} \iSep
-        (\mathcolor{red}{\datalangLoc} + \datalangIdx) \iPointsto_t \datalangHole
+        ???
     }{
-        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{teal}{\datalangVal_s}}
+        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{magenta}{\datalangVal_s}}
     }{
-        \datalangCall{\datalangFnptr{\texttt{map\_dps}}}{\mathcolor{red}{\datalangLoc}\ \datalangIdx\ \mathcolor{teal}{\datalangVal_t}}
+        \datalangCall{\datalangFnptr{\texttt{map\_dps}}}{\mathcolor{blue}{\datalangLoc}\ \datalangIdx\ \mathcolor{magenta}{\datalangVal_t}}
     }{
-        \datalangUnit, \mathcolor{blue}{\datalangValTwo_t} \ldotp
-            \exists \mathcolor{blue}{\datalangValTwo_t} \ldotp
-            \mathcolor{blue}{\datalangValTwo_s} \iSimilar \mathcolor{blue}{\datalangValTwo_t} \iSep
-            (\mathcolor{red}{\datalangLoc} + \datalangIdx) \iPointsto_t \mathcolor{blue}{\datalangValTwo_t}
+        ???
     }
 \]
 \end{frame}
 
-\begin{frame}{\Simuliris + protocols}
+\begin{frame}{Direct transformation}
+\Large
+\[
+    \iSimvHoarePretty{
+        \mathcolor{magenta}{\datalangVal_s} \iSimilar \mathcolor{magenta}{\datalangVal_t}
+    }{
+        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{magenta}{\datalangVal_s}}
+    }{
+        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{magenta}{\datalangVal_t}}
+    }{
+        \mathcolor{teal}{\datalangValTwo_s}, \mathcolor{teal}{\datalangValTwo_t} \ldotp
+        \mathcolor{teal}{\datalangValTwo_s} \iSimilar \mathcolor{teal}{\datalangValTwo_t}
+    }
+\]
+\vfill
 \begin{mathpar}
     \inferrule*[lab=RelDir (\Simuliris)]
         {
             \datalangFn \in \dom{\datalangProg_s}
         \\\\
-            \mathcolor{red}{\datalangVal_s} \iSimilar \mathcolor{red}{\datalangVal_t}
+            \mathcolor{magenta}{\datalangVal_s} \iSimilar \mathcolor{magenta}{\datalangVal_t}
         \\\\
-            \forall \mathcolor{blue}{\datalangValTwo_s}, \mathcolor{blue}{\datalangValTwo_t} \ldotp
-            \mathcolor{blue}{\datalangValTwo_s} \iSimilar \mathcolor{blue}{\datalangValTwo_t} \iWand
-            \iPred (\mathcolor{blue}{\datalangValTwo_s}, \mathcolor{blue}{\datalangValTwo_t})
+            \forall \mathcolor{teal}{\datalangValTwo_s}, \mathcolor{teal}{\datalangValTwo_t} \ldotp
+            \mathcolor{teal}{\datalangValTwo_s} \iSimilar \mathcolor{teal}{\datalangValTwo_t} \iWand
+            \iPred (\mathcolor{teal}{\datalangValTwo_s}, \mathcolor{teal}{\datalangValTwo_t})
         }{
             \iSim{
                 \iPred
             }{
-                \datalangCall{\datalangFnptr{\datalangFn}}{\mathcolor{red}{\datalangVal_s}}
+                \datalangCall{\datalangFnptr{\datalangFn}}{\mathcolor{magenta}{\datalangVal_s}}
             }{
-                \datalangCall{\datalangFnptr{\datalangFn}}{\mathcolor{red}{\datalangVal_t}}
+                \datalangCall{\datalangFnptr{\datalangFn}}{\mathcolor{magenta}{\datalangVal_t}}
             }
         }
-    \\
+\end{mathpar}
+\end{frame}
+
+\begin{frame}{DPS transformation}
+\large
+\[
+    \iSimvHoarePretty{
+        \mathcolor{magenta}{\datalangVal_s} \iSimilar \mathcolor{magenta}{\datalangVal_t} \iSep
+        (\mathcolor{blue}{\datalangLoc} + \datalangIdx) \iPointsto_t \datalangHole
+    }{
+        \datalangCall{\datalangFnptr{\texttt{map}}}{\mathcolor{magenta}{\datalangVal_s}}
+    }{
+        \datalangCall{\datalangFnptr{\texttt{map\_dps}}}{\mathcolor{blue}{\datalangLoc}\ \datalangIdx\ \mathcolor{magenta}{\datalangVal_t}}
+    }{
+        \datalangUnit, \mathcolor{teal}{\datalangValTwo_t} \ldotp
+            \exists \mathcolor{teal}{\datalangValTwo_t} \ldotp
+            \mathcolor{teal}{\datalangValTwo_s} \iSimilar \mathcolor{teal}{\datalangValTwo_t} \iSep
+            (\mathcolor{blue}{\datalangLoc} + \datalangIdx) \iPointsto_t \mathcolor{teal}{\datalangValTwo_t}
+    }
+\]
+\vfill
+\begin{mathpar}
     \inferrule*[lab=RelDPS]
         {
             \datalangRenaming [\datalangFn] = \datalangFn_\mathit{dps}
         \\\\
-            \mathcolor{red}{\overline{\datalangVal_s}} \iSimilar \mathcolor{red}{\overline{\datalangVal_t}}
+            \mathcolor{magenta}{\overline{\datalangVal_s}} \iSimilar \mathcolor{magenta}{\overline{\datalangVal_t}}
         \\\\
-            \mathcolor{teal}{\datalangLoc} \iPointsto_t \overline{\datalangVal}
+            \mathcolor{blue}{\datalangLoc} \iPointsto_t \overline{\datalangVal}
         \\\\
-            \forall \mathcolor{blue}{\datalangValTwo_s}, \mathcolor{blue}{\datalangValTwo_t} \ldotp
-            \mathcolor{blue}{\datalangValTwo_s} \iSimilar \mathcolor{blue}{\datalangValTwo_t} \iWand
-            \mathcolor{teal}{\datalangLoc} \iPointsto_t \overline{\datalangVal} [\datalangIdx \mapsto \mathcolor{blue}{\datalangValTwo_t}] \iWand
-            \iPred (\mathcolor{blue}{\datalangValTwo_s}, \datalangUnit)
+            \forall \mathcolor{teal}{\datalangValTwo_s}, \mathcolor{teal}{\datalangValTwo_t} \ldotp
+            \mathcolor{teal}{\datalangValTwo_s} \iSimilar \mathcolor{teal}{\datalangValTwo_t} \iWand
+            \mathcolor{blue}{\datalangLoc} \iPointsto_t \overline{\datalangVal} [\datalangIdx \mapsto \mathcolor{teal}{\datalangValTwo_t}] \iWand
+            \iPred (\mathcolor{teal}{\datalangValTwo_s}, \datalangUnit)
         }{
             \iSim{
                 \iPred
             }{
-                \datalangCall{\datalangFnptr{\datalangFn}}{\mathcolor{red}{\overline{\datalangVal_s}}}
+                \datalangCall{\datalangFnptr{\datalangFn}}{\mathcolor{magenta}{\overline{\datalangVal_s}}}
             }{
-                \datalangCall{\datalangFnptr{\datalangFn_\mathit{dps}}}{\mathcolor{teal}{\datalangLoc} \ \datalangIdx\ \mathcolor{red}{\overline{\datalangVal_t}}}
+                \datalangCall{\datalangFnptr{\datalangFn_\mathit{dps}}}{\mathcolor{blue}{\datalangLoc} \ \datalangIdx\ \mathcolor{magenta}{\overline{\datalangVal_t}}}
             }
         }
     \\
     \inferrule*[lab=RelProtocol]
         {
-            \mathcolor{orange}{\iProt} (\mathcolor{magenta}{\iPredTwo}, \datalangExpr_s, \datalangExpr_t)
+            \mathcolor{red}{\iProt} (\datalangExpr_s, \datalangExpr_t, \mathcolor{cyan}{\iPredTwo})
         \and
             \forall \datalangExpr_s', \datalangExpr_t' \ldotp
-            \mathcolor{magenta}{\iPredTwo} (\datalangExpr_s', \datalangExpr_t') \iWand
-            \iSimv[
-                \mathcolor{orange}{\iProt}
+            \mathcolor{cyan}{\iPredTwo} (\datalangExpr_s', \datalangExpr_t') \iWand
+            \iSim[
+                \mathcolor{red}{\iProt}
             ]{
                 \iPred
             }{
@@ -89,8 +119,8 @@
                 \datalangExpr_t'
             }
         }{
-            \iSimv[
-                \mathcolor{orange}{\iProt}
+            \iSim[
+                \mathcolor{red}{\iProt}
             ]{
                 \iPred
             }{

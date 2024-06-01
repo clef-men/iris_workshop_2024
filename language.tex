@@ -1,5 +1,6 @@
 \begin{frame}{\DataLang: syntax}
 \centering
+\color{gray}
 \begin{tabular}{lclcl}
         $\datalangIdx[]$
         & $\ni$ &
@@ -31,7 +32,7 @@
         & $\ni$ &
         $\datalangVal, \datalangValTwo$
         & $\Coloneqq$ &
-        $\datalangUnit \mid \datalangIdx \mid \datalangTag \mid \datalangBool \mid \datalangLoc \mid \datalangFnptr{\datalangFn}$
+        $\datalangUnit \mid \datalangIdx \mid \datalangTag \mid \datalangBool \mid \datalangLoc \mid \mathcolor{red}{\datalangFnptr{\datalangFn}}$
     \\
         $\datalangExpr[]$
         & $\ni$ &
@@ -45,7 +46,7 @@
     \\
         &&
         & | &
-        $\datalangBlock{\datalangTag}{\datalangExpr_1}{\datalangExpr_2}$
+        $\mathcolor{orange}{\datalangBlock{\datalangTag}{\datalangExpr_1}{\datalangExpr_2}}$
     \\
         &&
         & | &
@@ -55,13 +56,13 @@
         & $\ni$ &
         $\datalangDef$
         & $\Coloneqq$ &
-        $\datalangRec{\overline{\datalangVar}}{\datalangExpr}$
+        $\mathcolor{violet}{\datalangRec{\overline{\datalangVar}}{\datalangExpr}}$
     \\
         $\datalangProg[]$
         & $\ni$ &
         $\datalangProg$
         & $\coloneqq$ &
-        $\datalangFn[] \finmap \datalangDef[]$
+        $\mathcolor{blue}{\datalangFn[] \finmap \datalangDef[]}$
     \\
         $\datalangState[]$
         & $\ni$ &
@@ -78,70 +79,70 @@
 \vfill
 \end{frame}
 
-\begin{frame}{\DataLang: semantics}
-\begin{mathpar}
-    \inferrule*[lab=StepCall]
-        {
-            \datalangProg{} [\datalangFn] = (\datalangRec{\overline{\datalangVar}}{\datalangExpr})
-        }{
-            \left(
-                \datalangCall{\datalangFnptr{\datalangFn}}{\overline{\datalangVal}},
-                \datalangState
-            \right)
-            \headStep{\datalangProg}
-            \left(
-                \datalangExpr{} [\overline{\datalangVar} \backslash \overline{\datalangVal}],
-                \datalangState
-            \right)
-        }
-    \\
-    \inferrule*[lab=StepBlock]
-        {
-            \forall \datalangIdx \in \datalangIdx[], \datalangLoc + \datalangIdx \notin \dom{\datalangState}
-        }{
-            \left(
-                \datalangBlock{\datalangTag}{\datalangVal_1}{\datalangVal_2},
-                \datalangState
-            \right)
-            \headStep{\datalangProg}
-            \left(
-                \datalangLoc,
-                \datalangState{} [\datalangLoc \mapsto \datalangTag, \datalangVal_1, \datalangVal_2]
-            \right)
-        }
-    \\
-    \inferrule*[lab=StepLoad]
-        {
-            \datalangState{} [\datalangLoc] = \datalangVal
-        }{
-            \left(
-                \datalangLoad{\datalangLoc}{\datalangIdx},
-                \datalangState
-            \right)
-            \headStep{\datalangProg}
-            \left(
-                \datalangVal,
-                \datalangState
-            \right)
-        }
-    \and
-    \inferrule*[lab=StepStore]
-        {
-            \datalangLoc + \datalangIdx \in \dom{\datalangState}
-        }{
-            \left(
-                \datalangStore{\datalangLoc}{\datalangIdx}{\datalangVal},
-                \datalangState
-            \right)
-            \headStep{\datalangProg}
-            \left(
-                \datalangUnit,
-                \datalangState{} [\datalangLoc + \datalangIdx \mapsto \datalangVal]
-            \right)
-        }
-    \\
-\end{mathpar}
-\end{frame}
+%\begin{frame}{\DataLang: semantics}
+%\begin{mathpar}
+%    \inferrule*[lab=StepCall]
+%        {
+%            \datalangProg{} [\datalangFn] = (\datalangRec{\overline{\datalangVar}}{\datalangExpr})
+%        }{
+%            \left(
+%                \datalangCall{\datalangFnptr{\datalangFn}}{\overline{\datalangVal}},
+%                \datalangState
+%            \right)
+%            \headStep{\datalangProg}
+%            \left(
+%                \datalangExpr{} [\overline{\datalangVar} \backslash \overline{\datalangVal}],
+%                \datalangState
+%            \right)
+%        }
+%    \\
+%    \inferrule*[lab=StepBlock]
+%        {
+%            \forall \datalangIdx \in \datalangIdx[], \datalangLoc + \datalangIdx \notin \dom{\datalangState}
+%        }{
+%            \left(
+%                \datalangBlock{\datalangTag}{\datalangVal_1}{\datalangVal_2},
+%                \datalangState
+%            \right)
+%            \headStep{\datalangProg}
+%            \left(
+%                \datalangLoc,
+%                \datalangState{} [\datalangLoc \mapsto \datalangTag, \datalangVal_1, \datalangVal_2]
+%            \right)
+%        }
+%    \\
+%    \inferrule*[lab=StepLoad]
+%        {
+%            \datalangState{} [\datalangLoc] = \datalangVal
+%        }{
+%            \left(
+%                \datalangLoad{\datalangLoc}{\datalangIdx},
+%                \datalangState
+%            \right)
+%            \headStep{\datalangProg}
+%            \left(
+%                \datalangVal,
+%                \datalangState
+%            \right)
+%        }
+%    \and
+%    \inferrule*[lab=StepStore]
+%        {
+%            \datalangLoc + \datalangIdx \in \dom{\datalangState}
+%        }{
+%            \left(
+%                \datalangStore{\datalangLoc}{\datalangIdx}{\datalangVal},
+%                \datalangState
+%            \right)
+%            \headStep{\datalangProg}
+%            \left(
+%                \datalangUnit,
+%                \datalangState{} [\datalangLoc + \datalangIdx \mapsto \datalangVal]
+%            \right)
+%        }
+%    \\
+%\end{mathpar}
+%\end{frame}
 
 \begin{frame}[fragile]{\DataLang: \texttt{map}}
 \begin{lstlisting}[basicstyle=\ttfamily\Large]

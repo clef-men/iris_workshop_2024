@@ -5,33 +5,33 @@
         \and
             \mathit{xs}_s \iSimilar \mathit{xs}_t
     }
-    \only<4->{
+    \only<6->{
         \\
             x_s \iSimilar x_t
         \and
             \mathit{xs}'_s \iSimilar \mathit{xs}'_t
     }
-    \only<6->{
+    \only<8->{
         \\
             y_s \iSimilar y_t
     }
-    \only<10-13>{
+    \only<11-14>{
         \\
             \datalangLoc_t \iPointsto_t (\mathrm{CONS}, y_t, \datalangHole)
     }
-    \only<14->{
+    \only<15->{
         \\
             \mathit{ys}_s \iSimilar \mathit{ys}_t
     }
-    \only<14-18>{
+    \only<15-19>{
         \\
             \datalangLoc_t \iPointsto_t (\mathrm{CONS}, y_t, \mathit{ys}_t)
     }
-    \only<17-18>{
+    \only<18-19>{
         \\
             \datalangLoc_s \iPointsto_s (\mathrm{CONS}, y_s, \mathit{ys}_s)
     }
-    \only<19->{
+    \only<20->{
         \\
             \datalangLoc_s \iSimilar \datalangLoc_t
     }
@@ -42,6 +42,11 @@
 \begin{minipage}{.4\columnwidth}
     \begin{onlyenv}<1-2>
         \begin{lstlisting}
+@map $f_s$ $\mathit{xs}_s$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<3-4>
+        \begin{lstlisting}
 match $\mathit{xs}_s$ with
 | [] ->
     []
@@ -50,24 +55,24 @@ match $\mathit{xs}_s$ with
     y :: @map $f_s$ xs'
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<3>
+    \begin{onlyenv}<5>
         \begin{lstlisting}
         []
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<4-5>
+    \begin{onlyenv}<6-7>
         \begin{lstlisting}
 let y = $f_s$ $x_s$ in
 y :: @map $f_s$ $\mathit{xs}'_s$
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<6-7>
+    \begin{onlyenv}<8>
         \begin{lstlisting}
 let y = $y_s$ in
 y :: @map $f_s$ $\mathit{xs}'_s$
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<8-11>
+    \begin{onlyenv}<9-11>
         \begin{lstlisting}
 $y_s$ :: @map $f_s$ $\mathit{xs}'_s$
         \end{lstlisting}
@@ -94,6 +99,11 @@ $\gtrsim$
 \begin{minipage}{.4\columnwidth}
     \begin{onlyenv}<1-2>
         \begin{lstlisting}
+        @map $f_t$ $\mathit{xs}_t$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<3-4>
+        \begin{lstlisting}
 match $\mathit{xs}_t$ with
 | [] ->
     []
@@ -104,59 +114,85 @@ match $\mathit{xs}_t$ with
     dst
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<3>
+    \begin{onlyenv}<5>
         \begin{lstlisting}
         []
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<4-5>
-        \begin{lstlisting}
-let y = $f_t$ $x_t$ in
-let dst = y :: ?? in
-@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
-dst
-        \end{lstlisting}
-    \end{onlyenv}
     \begin{onlyenv}<6-7>
         \begin{lstlisting}
-let y = $y_t$ in
-let dst = y :: ?? in
-@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
-dst
+    let y = $f_t$ $x_t$ in
+    let dst = y :: ?? in
+    @map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+    dst
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<8-9>
+    \begin{onlyenv}<8>
         \begin{lstlisting}
-let dst = $y_t$ :: ?? in
-@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
-dst
+    let y = $y_t$ in
+    let dst = y :: ?? in
+    @map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+    dst
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<10-11>
+    \begin{onlyenv}<9-10>
         \begin{lstlisting}
-let dst = $\datalangLoc_t$ in
-@map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
-dst
+    let dst = $y_t$ :: ?? in
+    @map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+    dst
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<12-13>
+    \begin{onlyenv}<11-12>
         \begin{lstlisting}
-@%\textcolor{red}{map\_dps}% $\datalangLoc_t$ 2 $f_t$ $\mathit{xs}'_t$ ;
-$\datalangLoc_t$
+    let dst = $\datalangLoc_t$ in
+    @map_dps dst 2 $f_t$ $\mathit{xs}'_t$ ;
+    dst
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<14>
+    \begin{onlyenv}<13-14>
         \begin{lstlisting}
-() ; $\datalangLoc_t$
+    @%\textcolor{red}{map\_dps}% $\datalangLoc_t$ 2 $f_t$ $\mathit{xs}'_t$ ;
+    $\datalangLoc_t$
         \end{lstlisting}
     \end{onlyenv}
-    \begin{onlyenv}<15->
+    \begin{onlyenv}<15>
         \begin{lstlisting}
-$\datalangLoc_t$
+        () ; $\datalangLoc_t$
+        \end{lstlisting}
+    \end{onlyenv}
+    \begin{onlyenv}<16->
+        \begin{lstlisting}
+        $\datalangLoc_t$
         \end{lstlisting}
     \end{onlyenv}
 \end{minipage}
 \begin{overbox}<2>
+    \begin{mathpar}
+        \inferrule*[lab=RelPure]
+            {
+                \datalangExpr_s \pureStep{p_s} \datalangExpr'_s
+            \and
+                \datalangExpr_t \pureStep{p_t} \datalangExpr'_t
+            \and
+                \iSim{
+                    \iPred
+                }{
+                    \datalangExpr'_s
+                }{
+                    \datalangExpr'_t
+                }
+            }{
+                \iSim{
+                    \iPred
+                }{
+                    \datalangExpr_s
+                }{
+                    \datalangExpr_t
+                }
+            }
+    \end{mathpar}
+\end{overbox}
+\begin{overbox}<4>
     \begin{mathpar}
         \inferrule*[lab=RelMatch]
             {
@@ -197,7 +233,7 @@ $\datalangLoc_t$
             }
     \end{mathpar}
 \end{overbox}
-\begin{overbox}<5>
+\begin{overbox}<7>
     \begin{mathpar}
         \inferrule*[lab=RelvCallSimilar]
             {
@@ -215,33 +251,7 @@ $\datalangLoc_t$
             }
     \end{mathpar}
 \end{overbox}
-\begin{overbox}<7>
-    \begin{mathpar}
-        \inferrule*[lab=RelPure]
-            {
-                \datalangExpr_s \pureStep{p_s} \datalangExpr'_s
-            \and
-                \datalangExpr_t \pureStep{p_t} \datalangExpr'_t
-            \and
-                \iSim{
-                    \iPred
-                }{
-                    \datalangExpr'_s
-                }{
-                    \datalangExpr'_t
-                }
-            }{
-                \iSim{
-                    \iPred
-                }{
-                    \datalangExpr_s
-                }{
-                    \datalangExpr_t
-                }
-            }
-    \end{mathpar}
-\end{overbox}
-\begin{overbox}<9>
+\begin{overbox}<10>
     \begin{mathpar}
         \inferrule*[lab=RelTgtCons]
             {
@@ -265,7 +275,7 @@ $\datalangLoc_t$
             }
     \end{mathpar}
 \end{overbox}
-\begin{overbox}<11>
+\begin{overbox}<12>
     \begin{mathpar}
         \inferrule*[lab=RelTgtPure]
             {
@@ -289,7 +299,7 @@ $\datalangLoc_t$
             }
     \end{mathpar}
 \end{overbox}
-\begin{overbox}<13>
+\begin{overbox}<14>
     \begin{mathpar}
         \inferrule*[lab=RelDPS2]
             {
@@ -314,7 +324,7 @@ $\datalangLoc_t$
             }
     \end{mathpar}
 \end{overbox}
-\begin{overbox}<16>
+\begin{overbox}<17>
     \begin{mathpar}
         \inferrule*[lab=RelSrcCons]
             {
@@ -338,7 +348,7 @@ $\datalangLoc_t$
             }
     \end{mathpar}
 \end{overbox}
-\begin{overbox}<18>
+\begin{overbox}<19>
     \begin{mathpar}
         \inferrule*[lab=RelBijInsert]
             {
