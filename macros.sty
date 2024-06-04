@@ -46,6 +46,12 @@
 \newcommand{\wf}[2][]{%
     \mathrm{wf}\ifx #1 \else _#1 \fi (#2)%
 }
+\newcommand{\mathhyphen}{%
+    {\hbox{-}}%
+}
+\newcommand{\circled}[1]{%
+    \raisebox{.5pt}{\textcircled{\raisebox{-.9pt}{#1}}}%
+}
 
 % ---------------------------------------------------------
 
@@ -86,6 +92,9 @@
 }
 \newcommand{\datalangExpr}[1][\@nil]{%
     \def\@tmp{#1}\ifx\@tmp\@nnil e \else \mathrm{Expr} \fi%
+}
+\newcommand{\datalangEctx}[1][\@nil]{%
+    \def\@tmp{#1}\ifx\@tmp\@nnil K \else \mathrm{Ectx} \fi%
 }
 \newcommand{\datalangDef}[1][\@nil]{%
     \def\@tmp{#1}\ifx\@tmp\@nnil d \else \mathrm{Def} \fi%
