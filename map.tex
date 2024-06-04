@@ -7,7 +7,7 @@ let rec %\textcolor{red}{map}% f xs =
       []
   | x :: xs ->
       let y = f x in
-      %\textcolor{teal}{y ::}% %\textcolor{red}{map}% f xs
+      %\textcolor{cyan}{y ::}% %\textcolor{red}{map}% f xs
 \end{lstlisting}
 \vfill
 \begin{lstlisting}
@@ -27,27 +27,27 @@ Stack overflow during evaluation (looping recursion?).
     \draw [fill=magenta, fill opacity=0.4, dashed] (2,0) rectangle (5,1) node [pos=.5] {\texttt{xs}} ;
     \draw [thick, ->] (1,0.5) -- (2,0.5) ;
     
-    \draw [fill=teal, fill opacity=0.4] (0,1.5) rectangle (1,2.5) node [pos=.5] {\texttt{f x}} ;
+    \draw [fill=cyan, fill opacity=0.4] (0,1.5) rectangle (1,2.5) node [pos=.5] {\texttt{f x}} ;
     \draw [fill=magenta, fill opacity=0.4, dashed] (2,1.5) rectangle (5,2.5) node [pos=.5] {\texttt{xs}} ;
     
-    \draw [fill=teal, fill opacity=0.4] (0,3) rectangle (1,4) node [pos=.5] {\texttt{f x}} ;
-    \draw [fill=teal, fill opacity=0.4, dashed] (2,3) rectangle (5,4) node [pos=.5] {\texttt{map f xs}} ;
+    \draw [fill=cyan, fill opacity=0.4] (0,3) rectangle (1,4) node [pos=.5] {\texttt{f x}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (2,3) rectangle (5,4) node [pos=.5] {\texttt{map f xs}} ;
     
-    \draw [fill=teal, fill opacity=0.4] (0,4.5) rectangle (1,5.5) node [pos=.5] {\texttt{f x}} ;
-    \draw [fill=teal, fill opacity=0.4, dashed] (2,4.5) rectangle (5,5.5) node [pos=.5] {\texttt{map f xs}} ;
+    \draw [fill=cyan, fill opacity=0.4] (0,4.5) rectangle (1,5.5) node [pos=.5] {\texttt{f x}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (2,4.5) rectangle (5,5.5) node [pos=.5] {\texttt{map f xs}} ;
     \draw [thick, ->] (1,5) -- (2,5) ;
 \end{tikzpicture}
 \end{frame}
 
 \begin{frame}[fragile]{The \texttt{map} problem: APS implementation}
 \begin{lstlisting}
-let rec %\textcolor{red}{map}% %\textcolor{teal}{ys}% f xs =
+let rec %\textcolor{red}{map}% %\textcolor{cyan}{ys}% f xs =
   match xs with
   | [] ->
       List.rev ys
   | x :: xs ->
       let y = f x in
-      %\textcolor{red}{map}% %\textcolor{teal}{(y ::\ ys)}% f xs
+      %\textcolor{red}{map}% %\textcolor{cyan}{(y ::\ ys)}% f xs
 let map xs =
   map [] f xs
 \end{lstlisting}
@@ -64,17 +64,17 @@ let map xs =
 \begin{frame}{The \texttt{map} problem: APS implementation}
 \centering
 \begin{tikzpicture}[yscale=-1]
-    \draw [fill=teal, fill opacity=0.4, dashed] (0,0) rectangle (3,1) node [pos=.5] {\texttt{acc}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (0,0) rectangle (3,1) node [pos=.5] {\texttt{acc}} ;
     \draw [fill=magenta, fill opacity=0.4] (4,0) rectangle (5,1) node [pos=.5] {\texttt{x}} ;
     \draw [fill=magenta, fill opacity=0.4, dashed] (6,0) rectangle (9,1) node [pos=.5] {\texttt{xs}} ;
     \draw [thick, ->] (5,0.5) -- (6,0.5) ;
     
-    \draw [fill=teal, fill opacity=0.4, dashed] (0,1.5) rectangle (3,2.5) node [pos=.5] {\texttt{acc}} ;
-    \draw [fill=teal, fill opacity=0.4] (4,1.5) rectangle (5,2.5) node [pos=.5] {\texttt{f x}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (0,1.5) rectangle (3,2.5) node [pos=.5] {\texttt{acc}} ;
+    \draw [fill=cyan, fill opacity=0.4] (4,1.5) rectangle (5,2.5) node [pos=.5] {\texttt{f x}} ;
     \draw [fill=magenta, fill opacity=0.4, dashed] (6,1.5) rectangle (9,2.5) node [pos=.5] {\texttt{xs}} ;
     
-    \draw [fill=teal, fill opacity=0.4, dashed] (0,3) rectangle (3,4) node [pos=.5] {\texttt{acc}} ;
-    \draw [fill=teal, fill opacity=0.4] (4,3) rectangle (5,4) node [pos=.5] {\texttt{f x}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (0,3) rectangle (3,4) node [pos=.5] {\texttt{acc}} ;
+    \draw [fill=cyan, fill opacity=0.4] (4,3) rectangle (5,4) node [pos=.5] {\texttt{f x}} ;
     \draw [fill=magenta, fill opacity=0.4, dashed] (6,3) rectangle (9,4) node [pos=.5] {\texttt{xs}} ;
     \draw [thick, ->] (4,3.5) -- (3,3.5) ;
 \end{tikzpicture}
@@ -83,17 +83,17 @@ let map xs =
 \begin{frame}{The \texttt{map} problem: DPS implementation}
 \centering
 \begin{tikzpicture}[yscale=-1]
-    \draw [fill=teal, fill opacity=0.4, dashed] (0,0) rectangle (3,1) node [pos=.5] {\texttt{acc}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (0,0) rectangle (3,1) node [pos=.5] {\texttt{acc}} ;
     \draw [fill=magenta, fill opacity=0.4] (4,0) rectangle (5,1) node [pos=.5] {\texttt{x}} ;
     \draw [fill=magenta, fill opacity=0.4, dashed] (6,0) rectangle (9,1) node [pos=.5] {\texttt{xs}} ;
     \draw [thick, ->] (5,0.5) -- (6,0.5) ;
     
-    \draw [fill=teal, fill opacity=0.4, dashed] (0,1.5) rectangle (3,2.5) node [pos=.5] {\texttt{acc}} ;
-    \draw [fill=teal, fill opacity=0.4] (4,1.5) rectangle (5,2.5) node [pos=.5] {\texttt{f x}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (0,1.5) rectangle (3,2.5) node [pos=.5] {\texttt{acc}} ;
+    \draw [fill=cyan, fill opacity=0.4] (4,1.5) rectangle (5,2.5) node [pos=.5] {\texttt{f x}} ;
     \draw [fill=magenta, fill opacity=0.4, dashed] (6,1.5) rectangle (9,2.5) node [pos=.5] {\texttt{xs}} ;
     
-    \draw [fill=teal, fill opacity=0.4, dashed] (0,3) rectangle (3,4) node [pos=.5] {\texttt{acc}} ;
-    \draw [fill=teal, fill opacity=0.4] (4,3) rectangle (5,4) node [pos=.5] {\texttt{f x}} ;
+    \draw [fill=cyan, fill opacity=0.4, dashed] (0,3) rectangle (3,4) node [pos=.5] {\texttt{acc}} ;
+    \draw [fill=cyan, fill opacity=0.4] (4,3) rectangle (5,4) node [pos=.5] {\texttt{f x}} ;
     \draw [fill=magenta, fill opacity=0.4, dashed] (6,3) rectangle (9,4) node [pos=.5] {\texttt{xs}} ;
     \draw [thick, ->] (3,3.5) -- (4,3.5) ;
 \end{tikzpicture}
@@ -103,7 +103,7 @@ let map xs =
 \begin{adjustwidth}{-1.5em}{-1.5em}
 \begin{minipage}{0.5\linewidth}
 \begin{lstlisting}
-let rec %\textcolor{red}{map\_dps}% %\textcolor{teal}{dst}% f xs =
+let rec %\textcolor{red}{map\_dps}% %\textcolor{cyan}{dst}% f xs =
   match xs with
   | [] ->
       %\textcolor{olive}{set\_field dst 1 []}%
@@ -111,7 +111,7 @@ let rec %\textcolor{red}{map\_dps}% %\textcolor{teal}{dst}% f xs =
       let y = f x in
       let dst' = y :: [] in
       %\textcolor{olive}{set\_field dst 1 dst'}% ;
-      %\textcolor{red}{map\_dps}% %\textcolor{teal}{dst'}% f xs
+      %\textcolor{red}{map\_dps}% %\textcolor{cyan}{dst'}% f xs
 \end{lstlisting}
 \end{minipage}
 \begin{minipage}{0.45\linewidth}
@@ -146,7 +146,7 @@ let%\textcolor{olive}{[@tail\_mod\_cons]}% rec %\textcolor{red}{map}% f xs =
       []
   | x :: xs ->
       let y = f x in
-      %\textcolor{teal}{y ::}% %\textcolor{red}{map}% f xs
+      %\textcolor{cyan}{y ::}% %\textcolor{red}{map}% f xs
 \end{lstlisting}
 \vfill
 \begin{lstlisting}
